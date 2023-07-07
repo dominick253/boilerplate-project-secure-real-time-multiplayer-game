@@ -64,6 +64,7 @@ function checkCollisions() {
     const collidedItem = collectibles[collidedIndex];
     player.score += collidedItem.value;
     collectibles.splice(collidedIndex, 1);
+    addCollectible(); //<---- moved here and it works!!!
   }
 }
 
@@ -75,10 +76,8 @@ function removeCollectible(collectible) {
   const index = collectibles.indexOf(collectible);
   if (index !== -1) {
     collectibles.splice(index, 1);
-    addCollectible(); 
   }
 }
-
 
 function generateRandomCoordinates() {
   const maxX = canvas.width - 10;
@@ -114,8 +113,8 @@ function addCollectible() {
   const id = generateRandomId();
   const { x, y } = generateRandomCoordinates();
   const value = 10;
-  
-  const collectible = new Collectible({id, value, x, y});
+
+  const collectible = new Collectible({ id, value, x, y });
   collectibles.push(collectible);
 }
 
