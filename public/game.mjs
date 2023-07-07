@@ -13,6 +13,8 @@ window.onload = function () {
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = 'black';
   ctx.fillRect(20, 20, 150, 100);
+  addCollectible(); // Add the collectible initially
+
 };
 
 document.addEventListener('keydown', handlePlayerMovement);
@@ -111,20 +113,23 @@ function generateRandomId() {
 
 
 function addCollectible() {
-  const id = generateRandomId(); // Generate a random ID
-  const x = Math.random() * (canvas.width - 10);
-  const y = Math.random() * (canvas.height - 10);
+  const id = generateRandomId();
+  const { x, y } = generateRandomCoordinates();
   const value = 10;
-  const collectible = new Collectible(id, value, x, y);
+  
+  const collectible = new Collectible({id, value, x, y});
   collectibles.push(collectible);
 }
 
 
 
+
 function updateGameState() {
+
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   players.forEach((player) => {
+
     context.fillStyle = 'blue';
     context.fillRect(player.x, player.y, 20, 20);
     context.fillStyle = 'black';
@@ -132,16 +137,15 @@ function updateGameState() {
   });
 
   collectibles.forEach((collectible) => {
+    // console.log('Rendering collectible:',collectible, collectible.id, 'at', collectible.x, collectible.y); // Add this log to check if collectible rendering is reached
+
     context.fillStyle = 'green';
     context.fillRect(collectible.x, collectible.y, 10, 10);
   });
 
-  const playerRank = calculateRank(players);
-  const rankElement = document.getElementById('player-rank');
-  rankElement.textContent = playerRank;
-
-  checkCollisions();
+  // ...
 }
+
 
 function gameLoop() {
   updateGameState();
@@ -153,10 +157,6 @@ socket.on('connect', () => {
   const startX = canvas.width / 2;
   const startY = canvas.height / 2;
   addPlayer(id, startX, startY);
-
-  
-  
-  addCollectible();
 });
 
 socket.on('disconnect', () => {
@@ -175,14 +175,9 @@ socket.on('playerDisconnect', ({ id }) => {
   removePlayer(id);
 });
 
-socket.on('collectibleAdded', ({ id, value }) => {
-  const { x, y } = generateRandomCoordinates(); // Generate random coordinates once
-  console.log(x + y)
+socket.on('collectibleAdded', () => {
   addCollectible();
-  updateGameState();
 });
-
-
 
 socket.on('collectibleRemoved', ({ id }) => {
   const collectible = collectibles.find((c) => c.id === id);
