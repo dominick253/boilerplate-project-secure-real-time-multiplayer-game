@@ -1,5 +1,13 @@
 body {
   margin: 20px;
+  background: black;
+  color: white;
+}
+
+h1,
+h3,
+p {
+  text-align: center;
 }
 
 code {
@@ -8,11 +16,23 @@ code {
 
 canvas {
   margin: auto;
+  border: 1px solid black;
+  /* Added to help visualize the canvas */
+  background-color: grey;
+  /* Added to help visualize the canvas */
+  width: 640px;
+  /* Explicit width */
+  height: 480px;
+  /* Explicit height */
 }
 
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  /* Added to center the canvas vertically */
+  align-items: center;
+  /* Added to center the canvas horizontally */
 }
 
 @media (min-width: 800px) {
