@@ -26,27 +26,27 @@ class Player {
   }
 
   collision(item) {
-  const playerLeft = this.x;
-  const playerRight = this.x + 20; 
-  const playerTop = this.y;
-  const playerBottom = this.y + 20;
+    const playerLeft = this.x;
+    const playerRight = this.x + 20;
+    const playerTop = this.y;
+    const playerBottom = this.y + 20;
 
-  const itemLeft = item.x;
-  const itemRight = item.x + 10; 
-  const itemTop = item.y;
-  const itemBottom = item.y + 10; 
+    const itemLeft = item.x;
+    const itemRight = item.x + 10;
+    const itemTop = item.y;
+    const itemBottom = item.y + 10;
 
-  if (
-    playerLeft < itemRight &&
-    playerRight > itemLeft &&
-    playerTop < itemBottom &&
-    playerBottom > itemTop
-  ) {
-    return true;
+    if (
+      playerLeft < itemRight &&
+      playerRight > itemLeft &&
+      playerTop < itemBottom &&
+      playerBottom > itemTop
+    ) {
+      return true;
+    }
+
+    return false;
   }
-
-  return false; 
-}
 
 
   calculateRank(arr) {
