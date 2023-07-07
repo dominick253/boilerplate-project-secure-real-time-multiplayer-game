@@ -59,13 +59,13 @@ function checkCollisions() {
   const player = players.find((p) => p.id === socket.id);
   if (!player) return;
 
-  const collidedItem = collectibles.find((item) => collision(player, item));
-  if (collidedItem) {
+  const collidedIndex = collectibles.findIndex((item) => player.collision(item));
+  if (collidedIndex !== -1) {
+    const collidedItem = collectibles[collidedIndex];
     player.score += collidedItem.value;
-    removeCollectible(collidedItem);
+    collectibles.splice(collidedIndex, 1);
   }
 }
-
 
 function collision(player, item) {
   return player.collision(item);
@@ -75,8 +75,7 @@ function removeCollectible(collectible) {
   const index = collectibles.indexOf(collectible);
   if (index !== -1) {
     collectibles.splice(index, 1);
-    const { x, y } = generateRandomCoordinates(); // Generate new random coordinates
-    addCollectible(); // Add new collectible with new coordinates
+    addCollectible(); 
   }
 }
 
@@ -111,7 +110,6 @@ function generateRandomId() {
   return Math.random().toString(36).substr(2, 9);
 }
 
-
 function addCollectible() {
   const id = generateRandomId();
   const { x, y } = generateRandomCoordinates();
@@ -120,9 +118,6 @@ function addCollectible() {
   const collectible = new Collectible({id, value, x, y});
   collectibles.push(collectible);
 }
-
-
-
 
 function updateGameState() {
 
@@ -137,15 +132,13 @@ function updateGameState() {
   });
 
   collectibles.forEach((collectible) => {
-    // console.log('Rendering collectible:',collectible, collectible.id, 'at', collectible.x, collectible.y); // Add this log to check if collectible rendering is reached
 
     context.fillStyle = 'green';
-    context.fillRect(collectible.x, collectible.y, 10, 10);
+    context.fillRect(collectible.x, collectible.y, 20, 20);
   });
 
-  // ...
+  checkCollisions();
 }
-
 
 function gameLoop() {
   updateGameState();
