@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Secure Real-Time Multiplayer Game</title>
+    <title>Dominick's Secure Real-Time Multiplayer Game</title>
     <meta
       name="description"
       content="An example for the fCC InfoSec Secure Real-Time Multiplayer Game project"
@@ -11,11 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../public/style.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
     <header>
-      <h1>Secure Real Time Multiplayer Game</h1>
+      <h1>Dominick's Secure Real Time Multiplayer Game</h1>
+      <h3>Controls: WASD</h3>
+      <p id="player-rank"></p>
+
     </header>
     <hr style="margin: 25px" />
     <div class="container">
@@ -27,6 +29,10 @@
       >
       </canvas>
     </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+          var socket = io();
+        </script>
+        <script src="../public/game.mjs" type="module"></script>
   </body>
-  <script src="../public/game.mjs" type="module"></script>
 </html>
